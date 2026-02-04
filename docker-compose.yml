@@ -13,5 +13,19 @@ services:
       - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend
+    container_name: sosa_backend
+    restart: always
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/sosa_db
+      SPRING_DATASOURCE_USERNAME: whyy0u
+      SPRING_DATASOURCE_PASSWORD: whyy0u_super_passwdlzo
+
 volumes:
   postgres_data:
