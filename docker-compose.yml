@@ -20,14 +20,15 @@ services:
         reservations:
           memory: 512m
 
+
   backend:
     build: ./backend
     container_name: sosa_backend
     restart: always
     depends_on:
       - postgres
-    ports:
-      - "8080:8080"
+    expose:
+      - "8080"   # только внутри docker сети
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/sosa_db
       SPRING_DATASOURCE_USERNAME: whyy0u
@@ -38,6 +39,26 @@ services:
           memory: 1g
         reservations:
           memory: 512m
+
+
+  nginx:
+    image: nginx:alpine
+    container_name: sosa_nginx
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+    volumes:
+      - ./frontend/dist:/usr/share/nginx/html
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    deploy:
+      resources:
+        limits:
+          memory: 256m
+        reservations:
+          memory: 128m
+
 
 volumes:
   postgres_data:
