@@ -13,6 +13,12 @@ services:
       - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    deploy:
+      resources:
+        limits:
+          memory: 1g
+        reservations:
+          memory: 512m
 
   backend:
     build: ./backend
@@ -26,6 +32,12 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/sosa_db
       SPRING_DATASOURCE_USERNAME: whyy0u
       SPRING_DATASOURCE_PASSWORD: whyy0u_super_passwdlzo
+    deploy:
+      resources:
+        limits:
+          memory: 1g
+        reservations:
+          memory: 512m
 
 volumes:
   postgres_data:
