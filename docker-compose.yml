@@ -19,6 +19,8 @@ services:
           memory: 1g
         reservations:
           memory: 512m
+    networks:
+    - sosa_net
 
 
   backend:
