@@ -39,6 +39,8 @@ services:
           memory: 1g
         reservations:
           memory: 512m
+    networks:
+      - sosa_net
 
 
   nginx:
@@ -58,7 +60,13 @@ services:
           memory: 256m
         reservations:
           memory: 128m
+    networks:
+      - sosa_net
 
 
 volumes:
   postgres_data:
+
+networks:
+  sosa_net:
+    driver: bridge
